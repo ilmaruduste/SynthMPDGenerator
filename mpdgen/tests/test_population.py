@@ -16,4 +16,5 @@ def testPopulation(cell_filepath, time_period):
     randomPopulation.generatePopulation()
     randomPopulation.generateMeaningfulLocations()
     randomPopulation.generateCDR(time_period)
+    randomPopulation.outputCDR("output_files/cdr_files")
     randomPopulation.outputCells("output_files/cell_location_files")

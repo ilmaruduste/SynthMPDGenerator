@@ -2,6 +2,7 @@ import importlib
 from . import users
 from datetime import datetime
 import os
+import pandas as pd
 
 class Population:
 
@@ -63,7 +64,10 @@ class Population:
 
 
     def outputCDR(self, output_cdr_folder):
-        pass
+        output_df = pd.concat([user.cdr_data for user in self.users])
+
+        output_filepath = os.path.join(output_cdr_folder, 'synthCDR_' + str(self.time_generated) + '.csv')
+        output_df.to_csv(output_filepath, sep = ';')
 
     def outputMetadata(self, output_metadata_folder):
         pass
