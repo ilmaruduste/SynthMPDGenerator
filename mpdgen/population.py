@@ -1,5 +1,7 @@
 import importlib
 from . import users
+from datetime import datetime
+import os
 
 class Population:
 
@@ -8,6 +10,7 @@ class Population:
         self.users = None
         self.cell_network = cell_network
         self.time_period = time_period
+        self.time_generated = datetime.now().strftime(format = "%Y%m%d%H%M%S")
 
         # TODO: Might not be necessary?
         for key, value in profile_dict.items():
@@ -58,3 +61,16 @@ class Population:
             for user in self.users:
                 user.generateCDR(self.cell_network)
 
+
+    def outputCDR(self, output_cdr_folder):
+        pass
+
+    def outputMetadata(self, output_metadata_folder):
+        pass
+
+    def outputCells(self, output_cells_folder):
+
+        output_filepath = os.path.join(output_cells_folder, 'cell_locations_' + str(self.time_generated) + '.csv')
+        self.cell_network.cells_df.to_csv(output_filepath, sep = ';')
+        print(f"Exported cell data to {output_filepath}!")
+        
