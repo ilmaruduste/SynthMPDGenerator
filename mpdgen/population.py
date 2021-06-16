@@ -13,9 +13,8 @@ class Population:
             self.key = value
 
     
-    def generatePopulation(self):
+    def generatePopulation(self, id_counter = 1):
 
-        id_counter = 1
         users_array = []
 
         for profile, profile_n in self.profile_dict.items():
