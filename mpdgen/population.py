@@ -3,10 +3,11 @@ from . import users
 
 class Population:
 
-    def __init__(self, profile_dict, cell_network = None):
+    def __init__(self, profile_dict, cell_network = None, time_period = None):
         self.profile_dict = profile_dict
         self.users = None
         self.cell_network = cell_network
+        self.time_period = time_period
 
         # TODO: Might not be necessary?
         for key, value in profile_dict.items():
@@ -43,3 +44,17 @@ class Population:
             print("Population generated, moving on!")
             for user in self.users:
                 user.generateMeaningfulLocations(self.cell_network)
+
+    def generateCDR(self, time_period):
+
+        print("\nGenerating CDR for entire population...")
+        try:
+            for user in self.users:
+                user.generateCDR(time_period)
+        except:
+            print("ERROR! Meaningful locations haven't been generated! Doing population.generateMeaningfulLocations() and trying to move on!")
+            self.generateMeaningfulLocations
+            print("Population and meaningful locations generated, moving on!")
+            for user in self.users:
+                user.generateCDR(self.cell_network)
+

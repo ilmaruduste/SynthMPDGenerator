@@ -31,9 +31,9 @@ class User(ABC):
         self.work_cell = cell_network.getRandomCell()
         print(f"User {self.id}'s work cell is cellid: {self.work_cell.cellid}, with latitude {self.work_cell.latitude} and longitude {self.work_cell.longitude}")
 
-    def generateCDR(self, time_period_array):
-        date_beginning = time_period_array[0]
-        date_end = time_period_array[1]
+    def generateCDR(self, time_period):
+        date_beginning = time_period[0]
+        date_end = time_period[1]
 
         date_range = pd.date_range(date_beginning, date_end, freq = 'd')
 

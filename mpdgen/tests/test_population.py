@@ -2,7 +2,7 @@ from .. import population
 from .. import cell_network
 
 
-def testPopulation(cell_filepath):
+def testPopulation(cell_filepath, time_period):
 
     testCellNetwork = cell_network.CellNetwork(cell_filepath)
 
@@ -15,3 +15,4 @@ def testPopulation(cell_filepath):
 
     randomPopulation.generatePopulation()
     randomPopulation.generateMeaningfulLocations()
+    randomPopulation.generateCDR(time_period)
