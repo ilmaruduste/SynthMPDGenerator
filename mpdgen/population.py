@@ -67,14 +67,20 @@ class Population:
         output_df = pd.concat([user.cdr_data for user in self.users])
 
         output_filepath = os.path.join(output_cdr_folder, 'synthCDR_' + str(self.time_generated) + '.csv')
-        output_df.to_csv(output_filepath, sep = ';')
+        output_df.to_csv(output_filepath, sep = ';', index = False)
+        print(f"Exported CDR to {output_filepath}!")
 
     def outputMetadata(self, output_metadata_folder):
-        pass
+        output_filepath = os.path.join(output_metadata_folder, 'metadata_' + str(self.time_generated) + '.csv')
+        output_df = pd.DataFrame([[user.id, user.profile, user.home_cell.cellid, user.work_cell.cellid] for user in self.users],
+                                    columns = ['id', 'profile', 'home_cell', 'work_cell'])
+        
+        output_df.to_csv(output_filepath, sep = ';', index = False)
+        print(f"Exported metadata to {output_filepath}!")
 
     def outputCells(self, output_cells_folder):
 
         output_filepath = os.path.join(output_cells_folder, 'cell_locations_' + str(self.time_generated) + '.csv')
-        self.cell_network.cells_df.to_csv(output_filepath, sep = ';')
+        self.cell_network.cells_df.to_csv(output_filepath, sep = ';', index = False)
         print(f"Exported cell data to {output_filepath}!")
         
