@@ -1,10 +1,14 @@
 from .. import users
+from .. import cell_network
 
-print("\n-- Running User tests... --\n")
 
-def testAbstractUser():
+def testAbstractUser(cell_filepath):
     print("Running abstract user test...")
 
-    john = users.User(54)
-    john.generateMeaningfulLocations()
+    testCellNetwork = cell_network.CellNetwork(cell_filepath)
+
+    john = users.User(54, cell_network = testCellNetwork)
+
+    john.generateMeaningfulLocations(john.cell_network)
+    
     print(f"User's ID: {john.id}")

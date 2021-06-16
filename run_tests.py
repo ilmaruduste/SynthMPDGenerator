@@ -1,6 +1,8 @@
 from mpdgen.tests import test_users, test_population
+import yaml
 
-test_users.testAbstractUser()
+conf = yaml.safe_load(open("config.yaml", "r"))
+cells_filepath = conf['REFERENCE']['CELLS']
 
-
-test_population.testPopulation()
+# test_users.testAbstractUser(cells_filepath)
+test_population.testPopulation(cells_filepath)

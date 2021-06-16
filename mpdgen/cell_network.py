@@ -16,14 +16,19 @@ class CellNetwork:
         cells_df = pd.read_csv(cells_filepath, sep = ';')
 
         self.cells_df = cells_df
+        self.cells = None
 
     def generateCellNetwork(self):
 
         # TODO: Think of a better system to specify column names
-        cells_array = [Cell(row['cell'], row['lat'], row['lon']) for row in self.cells_df]
+        # TODO: This list comprehension for sure could be optimised
+        cells_array = [Cell(row[0], row[1], row[2]) for row in zip(self.cells_df['cell'], self.cells_df['lat'], self.cells_df['lon'])]
         self.cells = cells_array
 
     def getRandomCell(self):
+
+        if self.cells == None:
+            self.generateCellNetwork()
 
         random_number = random.randint(0, len(self.cells))
 

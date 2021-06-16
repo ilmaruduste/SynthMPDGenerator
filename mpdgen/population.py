@@ -3,8 +3,10 @@ from . import users
 
 class Population:
 
-    def __init__(self, profile_dict):
+    def __init__(self, profile_dict, cell_network = None):
         self.profile_dict = profile_dict
+        self.users = None
+        self.cell_network = cell_network
 
         # TODO: Might not be necessary?
         for key, value in profile_dict.items():
@@ -35,6 +37,10 @@ class Population:
 
         try:
             for user in self.users:
-                user.generateMeaningfulLocations()
+                user.generateMeaningfulLocations(self.cell_network)
         except:
-            print("ERROR! Population hasn't been generated! Use population.generatePopulation()!")
+            print("ERROR! Population hasn't been generated! Doing population.generatePopulation() and trying to move on!")
+            self.generatePopulation()
+            print("Population generated, moving on!")
+            for user in self.users:
+                user.generateMeaningfulLocations(self.cell_network)
