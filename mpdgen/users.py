@@ -106,6 +106,36 @@ class GeneralUser(User):
         e.g. almost no activity during the night and the activity peak is during the day 
         '''
 
+        def generateTimestamps(timestamp_n, day_probability, day_object):
+            '''
+            Choosing between 2 beta distributions according to given probability
+            Generating one value from a chosen beta distribution
+            Normalising the value to 24 hours
+            Adding it into timestamp array
+
+            timestamp_n: number of timestamps generated
+            day_probability: probability that timestamp is not during night (00:00 - 06:00)
+            day_object: a datetime object to pull year, month, day from
+            '''
+
+            timestamp_float_array = []
+
+            for index in range(timestamp_n):
+
+                timestamp_float_array.append(np.random.choice([np.random.beta(0.8,15, size=1)[0],
+                                                np.random.beta(3.3, 2, size=1)[0]], 
+                                            size = 1, p=[1-day_probability,day_probability], replace=True)[0] * 24)
+
+            timestamp_array = [datetime.datetime(year = day_object.year, 
+                                                month = day_object.month, 
+                                                day = day_object.day, 
+                                                hour = int(timestamp_float), 
+                                                minute = int(timestamp_float % 1 * 60), 
+                                                second = int(timestamp_float % 1 * 60 % 1 * 60))
+                                for timestamp_float in timestamp_float_array]
+
+            return(timestamp_array)
+
         date_beginning = conf_cdr_generation['TIME PERIOD'][0]
         date_end = conf_cdr_generation['TIME PERIOD'][1]
 
@@ -126,10 +156,9 @@ class GeneralUser(User):
             # Row for debugging daily records
             # print(f"{day.strftime('%A')} got {daily_mean} records.")
 
-            for index in range(daily_mean):
-                # TODO: Add some kind of activity distribution relating to time (e.g. no activity during night, more activity during day)
-                
-                timestamp = datetime.datetime(day.year, day.month, day.day, random.randint(0, 23), random.randint(0, 59), random.randint(0, 59))
+            timestamp_array = generateTimestamps(daily_mean, conf_cdr_generation['DAY PROBABILITY'], day)
+
+            for timestamp in timestamp_array:
 
                 # TODO: Add some kind of model for predicting whether the user is at home, work or another regular cell dependant on the time of day
                 #       This model should have a condition that when someone goes to a meaningful location, they don't randomly switch between these meaningful
