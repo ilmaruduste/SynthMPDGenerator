@@ -33,6 +33,6 @@ class CellNetwork:
         if self.cells == None:
             self.generateCellNetwork()
 
-        random_number = random.randint(0, len(self.cells))
+        random_number = random.randint(0, len(self.cells)-1)
 
         return self.cells[random_number]
