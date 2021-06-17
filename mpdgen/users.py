@@ -73,6 +73,9 @@ class GeneralUser(User):
         self.work_cell = None
         self.regular_cell_array = []
 
+    def getRandomRegularCell(self):
+        return(random.choice(self.regular_cell_array))
+
     def generateMeaningfulLocations(self, cell_network):
         '''
         Here we'll say that the user has 1 - 5 cells that they visit regularly that are not work nor home cells
@@ -147,6 +150,39 @@ class GeneralUser(User):
         # i.e. When weekend is [Sat, Sun], then Monday is 0, ..., Sun is 6
         # and when weekend is [Fri, Sat], then Sundary is 0, ..., Sat is 6
 
+        # TODO: Add some kind of model for predicting whether the user is at home, work or another regular cell dependant on the time of day
+        #       This model should have a condition that when someone goes to a meaningful location, they don't randomly switch between these meaningful
+        #       locations during the day. They should stay put at one cell for some time. Maybe some kind of HMM would help here with state transitions?
+        
+        # TODO: This current implementation is a placeholder and should be replaced by a model or HMM.
+        # in order Home, Work, Other (regular cells)
+        hour_location_probabilities = {
+            0: [0.92, 0.01, 0.07],
+            1: [0.93, 0.01, 0.06],
+            2: [0.94, 0.01, 0.05],
+            3: [0.95, 0.01, 0.04],
+            4: [0.96, 0.01, 0.03],
+            5: [0.96, 0.03, 0.01],
+            6: [0.95, 0.04, 0.01],
+            7: [0.7, 0.25, 0.05],
+            8: [0.4, 0.5, 0.1],
+            9: [0.3, 0.6, 0.1],
+            10: [0.2, 0.7, 0.1],
+            11: [0.2, 0.7, 0.1],
+            12: [0.1, 0.6, 0.3],
+            13: [0.1, 0.6, 0.3],
+            14: [0.2, 0.7, 0.1],
+            15: [0.2, 0.7, 0.1],
+            16: [0.4, 0.5, 0.1],
+            17: [0.4, 0.4, 0.2],
+            18: [0.4, 0.3, 0.3],
+            19: [0.4, 0.1, 0.5],
+            20: [0.65, 0.05, 0.3],
+            21: [0.7, 0.05, 0.25],
+            22: [0.75, 0.05, 0.2],
+            23: [0.85, 0.03, 0.12],
+            24: [0.9, 0.01, 0.09],
+        }
 
         for day in date_range:
             daily_mean = int(round(np.random.normal(loc = conf_cdr_generation['DAY ACTIVITY MEAN'][day.weekday()],
@@ -160,13 +196,10 @@ class GeneralUser(User):
 
             for timestamp in timestamp_array:
 
-                # TODO: Add some kind of model for predicting whether the user is at home, work or another regular cell dependant on the time of day
-                #       This model should have a condition that when someone goes to a meaningful location, they don't randomly switch between these meaningful
-                #       locations during the day. They should stay put at one cell for some time. Maybe some kind of HMM would help here with state transitions?
-                possible_locations = [self.home_cell, self.work_cell]
-                possible_locations.extend(self.regular_cell_array) # extend() gives list values without list
 
-                current_location = random.choice(possible_locations)
+                current_location = np.random.choice(a = [self.home_cell, self.work_cell, self.getRandomRegularCell()],
+                                                    size = 1,
+                                                    p = hour_location_probabilities[timestamp.hour])[0]
 
                 cdr_data_array.append([self.id, str(timestamp), current_location.cellid])
             
