@@ -1,7 +1,13 @@
 CDR GENERATION:
-  DATA DENSITY: 10                              # Average number of CDR per day per user
+  DATA DENSITY: 20                              # Average number of CDR per day per user
   TIME PERIOD: ['2021-01-01', '2021-01-07']     # Date period for which to calculate synthetic CDR, both sides inclusive
-
+  DAY ACTIVITY MEAN: {0: 0.771, 1: 0.685, 2: 0.702,               # Average activity coefficients for days of the week
+                      3: 0.769, 4: 0.953, 5: 0.329,               # 0 by default meaning Monday, 1 = Tuesday etc
+                      6: 0.073}
+  DAY ACTIVITY STANDARD DEVIATION: {0: 0.079, 1: 0.095, 2: 0.063, # Average activity coefficient deviations for days of the week
+                                    3: 0.069, 4: 0.052, 5: 0.074, # 0 by default meaning Monday, 1 = Tuesday etc  
+                                    6: 0.050}
+  WEEKEND ARRAY: {"Saturday", "Sunday"}
 
 REFERENCE:
   CELLS: 'ref_data/ee_cells.csv'                # Input data in the form of cells, usually from OpenCellID. Uses the columns 'cell', 'lat' and 'lon'

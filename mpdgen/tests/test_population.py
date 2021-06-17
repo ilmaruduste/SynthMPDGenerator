@@ -5,10 +5,6 @@ from .. import cell_network
 def testPopulation(conf):
 
     cells_filepath = conf['REFERENCE']['CELLS']
-    time_period = conf['CDR GENERATION']['TIME PERIOD']
-    cdr_output_folder = conf['OUTPUT']['CDR']
-    cells_output_folder = conf['OUTPUT']['CELLS']
-    metadata_output_folder = conf['OUTPUT']['METADATA']
 
     testCellNetwork = cell_network.CellNetwork(cells_filepath)
 
@@ -21,8 +17,8 @@ def testPopulation(conf):
 
     randomPopulation.generatePopulation()
     randomPopulation.generateMeaningfulLocations()
-    randomPopulation.generateCDR(time_period)
-    
-    randomPopulation.outputCDR(cdr_output_folder)
-    randomPopulation.outputCells(cells_output_folder)
-    randomPopulation.outputMetadata(metadata_output_folder)
+    randomPopulation.generateCDR(conf)
+
+    randomPopulation.outputCDR(conf)
+    randomPopulation.outputCells(conf)
+    randomPopulation.outputMetadata(conf)
