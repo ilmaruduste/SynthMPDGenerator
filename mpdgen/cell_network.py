@@ -21,7 +21,10 @@ class CellNetwork:
     def generateCellNetwork(self):
 
         # TODO: Think of a better system to specify column names
+        # TODO: Make 
         # TODO: This list comprehension for sure could be optimised
+
+        # Create a Cell object for each cell in ref data
         cells_array = [Cell(row[0], row[1], row[2]) for row in zip(self.cells_df['cell'], self.cells_df['lat'], self.cells_df['lon'])]
         self.cells = cells_array
 
