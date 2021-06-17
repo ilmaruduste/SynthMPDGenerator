@@ -4,4 +4,9 @@ CDR GENERATION:
 
 
 REFERENCE:
-  CELLS: '/Users/ilmaruduste/dev_week/SynthMPDGenerator/ref_data/ee_cells.csv'
+  CELLS: 'ref_data/ee_cells.csv'
+
+OUTPUT:
+  CDR: 'output_files/cdr_files'
+  CELLS: 'output_files/cell_location_files'
+  METADATA: 'output_files/metadata_files'

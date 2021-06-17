@@ -2,9 +2,15 @@ from .. import population
 from .. import cell_network
 
 
-def testPopulation(cell_filepath, time_period):
+def testPopulation(conf):
 
-    testCellNetwork = cell_network.CellNetwork(cell_filepath)
+    cells_filepath = conf['REFERENCE']['CELLS']
+    time_period = conf['CDR GENERATION']['TIME PERIOD']
+    cdr_output_folder = conf['OUTPUT']['CDR']
+    cells_output_folder = conf['OUTPUT']['CELLS']
+    metadata_output_folder = conf['OUTPUT']['METADATA']
+
+    testCellNetwork = cell_network.CellNetwork(cells_filepath)
 
     randomProfileDict = dict({"User":5, "GeneralUser": 10})
 
@@ -16,6 +22,7 @@ def testPopulation(cell_filepath, time_period):
     randomPopulation.generatePopulation()
     randomPopulation.generateMeaningfulLocations()
     randomPopulation.generateCDR(time_period)
-    randomPopulation.outputCDR("output_files/cdr_files")
-    randomPopulation.outputMetadata("output_files/metadata_files")
-    randomPopulation.outputCells("output_files/cell_location_files")
+    
+    randomPopulation.outputCDR(cdr_output_folder)
+    randomPopulation.outputCells(cells_output_folder)
+    randomPopulation.outputMetadata(metadata_output_folder)

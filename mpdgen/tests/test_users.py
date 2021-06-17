@@ -2,10 +2,13 @@ from .. import users
 from .. import cell_network
 
 
-def testAbstractUser(cell_filepath):
+def testAbstractUser(conf):
+
+    cells_filepath = conf['REFERENCE']['CELLS']
+
     print("Running abstract user test...")
 
-    testCellNetwork = cell_network.CellNetwork(cell_filepath)
+    testCellNetwork = cell_network.CellNetwork(cells_filepath)
 
     john = users.User(54, cell_network = testCellNetwork)
 
