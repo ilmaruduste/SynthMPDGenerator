@@ -86,6 +86,8 @@ class GeneralUser(User):
         self.work_cell = cell_network.getRandomCell()
         print(f"User {self.id}'s work cell is cellid: {self.work_cell.cellid}, with latitude {self.work_cell.latitude} and longitude {self.work_cell.longitude}")
 
+        # TODO: Regular cell might happen to be the same as home or work cell. Try to implement checks to combat this.
+
         # Assigning the number of regularly visited cells for the user
         regular_cell_count = random.randint(1,5)
         regular_cell_array = []
