@@ -1,7 +1,7 @@
 CDR GENERATION:
   DATA DENSITY: 10                              # Average number of CDR per day per user
-  POPULATION: {"User": 1, "GeneralUser": 1}
-  TIME PERIOD: ['2021-01-01', '2021-01-08']     # Date period for which to calculate synthetic CDR, both sides inclusive
+  POPULATION: {"User": 0, "GeneralUser": 100}
+  TIME PERIOD: ['2021-01-01', '2021-01-01']     # Date period for which to calculate synthetic CDR, both sides inclusive
   DAY ACTIVITY MEAN: {0: 0.771, 1: 0.685, 2: 0.702,               # Average activity coefficients for days of the week
                       3: 0.769, 4: 0.953, 5: 0.329,               # 0 by default meaning Monday, 1 = Tuesday etc
                       6: 0.073}
